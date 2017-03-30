@@ -1,0 +1,18 @@
+{
+	"description":"Managing EC2 instance states for the purpose of lowering run costs",
+	"schemaVersion":"0.3",
+	"assumeRole":"arn:aws:iam::186945229420:role/sysAutomation",
+	"mainSteps":[
+		{
+			"name":"stopInstances",
+			"action":"aws:changeInstanceState",
+			"maxAttempts":1,
+			"onFailure":"Continue",
+			"inputs":{
+				"InstanceIDs":[*],
+				"DesiredState":"stopped"
+			}
+		}
+	]
+}
+
