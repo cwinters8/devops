@@ -6,7 +6,7 @@
 
 # dynamic variables
 # TO-DO: parameterize these
-targroup=launch-wizard-1
+targroup=private-nodes
 ports=(7916 20080 20081)
 # set openall to True if the port should be open to the world. NOTE: This will ignore any security groups set as source.
 openall=False
@@ -49,7 +49,7 @@ do
 	# if openall is set to True, set the port to be open to the world
 	if $openall
 	then
-		echo "Adding world inbound rules..." | tee -a $logfile
+		echo "Adding open-to-the-world inbound rules..." | tee -a $logfile
 		srcip='0.0.0.0/0'
 		aws ec2 authorize-security-group-ingress --group-id $targroupid --protocol $protocol --port $port --cidr $srcip | tee -a $logfile
 	# otherwise, use security groups as the source
