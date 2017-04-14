@@ -1,2 +1,2 @@
 # Repo name: aws
-# Description: Repository for automating an AWS environment
+# Description: Repository to store code for environment automation
