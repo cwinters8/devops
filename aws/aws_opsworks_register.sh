@@ -1,0 +1,2 @@
+aws opsworks register --infrastructure-class ec2 --region us-east-1 --stack-id 8efd2e73-c717-4976-af02-d28df3561210 --ssh-username ec2-user --ssh-private-key /Users/clark.wintersibm.com/.ssh/edu-keypair.pem i-0846dada88ffcbe03
+aws opsworks register --infrastructure-class ec2 --region us-east-1 --stack-id 8efd2e73-c717-4976-af02-d28df3561210 --ssh-username ec2-user --ssh-private-key /Users/clark.wintersibm.com/.ssh/edu-keypair.pem i-0c5773867164538d4

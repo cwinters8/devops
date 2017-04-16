@@ -1,0 +1,14 @@
+--- # Checks the LDAP replication status queue
+- name: check replication state
+  shell: '/opt/ibm/ldap/V6.3.1/bin/idsldapsearch -p 389 -D cn=root -w {{ sds_root_password }} -s sub -b "" objectclass=ibm-repl* ++ibmrepl | grep replicationState'
+  register: replState
+
+- name: check replication queue
+  shell: '/opt/ibm/ldap/V6.3.1/bin/idsldapsearch -p 389 -D cn=root -w {{ sds_root_password }} -s sub -b "" objectclass=ibm-repl* ++ibmrepl | grep ibm-replicationPendingChangeCount'
+  register: replQueue
+
+- debug:
+    msg: "LDAP Replication state: {{ replState.stdout }}"
+
+- debug:
+    msg: "LDAP Replication queue: {{ replQueue.stdout }}"

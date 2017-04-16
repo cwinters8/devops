@@ -1,0 +1,21 @@
+- name: "Get {{ item }}"
+  unarchive:
+    src: "{{ fwdir }}/{{ item }}.tar.gz"
+    dest: "{{ ansdir }}/"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+# - name: Get Playbooks
+#   copy:
+#     src: "{{ fwdir }}/playbooks"
+#     dest: "{{ ansdir }}"
+#     owner: "{{ user }}"
+#     group: "{{ user }}"
+
+# - name: "Get Inventory for {{ env }}"
+#   copy:
+#     src: "{{ envdir }}/"
+#     dest: "{{ ansdir }}/inventory"
+#     owner: "{{ user }}"
+#     group: "{{ user }}"
+    

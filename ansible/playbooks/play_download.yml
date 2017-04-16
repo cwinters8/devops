@@ -1,0 +1,22 @@
+--- # testing loops in Ansible
+
+- hosts: ldap
+  become: yes
+
+  vars:
+    env: othrd
+    homedir: /Users/clark.wintersibm.com
+    fwdir: "{{ homedir }}/CISAUTOMATION/ansible_framework/ansible_framework"
+    envdir: "{{ homedir }}/CISAUTOMATION/ansible_deployment/InventoryDefinition/inventory/environments/{{ env }}"
+    bindir: /lh_files/cis_assets
+    ansdir: "/etc/ansible/{{ env }}"
+    user: devops
+    s3bucket: https://s3.amazonaws.com/clark-binaries
+  
+  tasks:
+  - include: ../tasks/download_ldap_binaries.yml
+    with_items:
+      - sds
+      - gskit
+      - db2
+

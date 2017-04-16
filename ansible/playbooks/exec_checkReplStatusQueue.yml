@@ -1,0 +1,6 @@
+- name: execute the task to check the LDAP replication status queue
+  hosts: ldap
+  tasks:
+    - include_vars:
+        file: /Users/clark.wintersibm.com/CISAUTOMATION/ansible_deployment/InventoryDefinition/inventory/group_vars/ldap-all
+    - include: ../tasks/check_repl_status_queue.yml

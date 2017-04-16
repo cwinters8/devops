@@ -1,0 +1,10 @@
+--- # testing loops in Ansible
+
+- hosts: ldap
+  
+  tasks:
+  - include: ../tasks/filestat.yml
+    with_items:
+      - sds
+      - gskit
+      - db2

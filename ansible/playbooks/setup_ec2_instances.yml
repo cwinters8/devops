@@ -1,0 +1,38 @@
+--- # configuring lab server users and directory structure
+
+- hosts: ldap amaz
+  become: yes
+  tasks:
+  - user:
+      name: devops
+      shell: /bin/bash
+
+  - yum:
+      name: epel-release
+      state: latest
+
+  - yum:
+      name: '*'
+      state: latest
+
+  - yum:
+      name: ansible
+      state: latest
+
+  - file:
+      name: /lh_files/cis_assets
+      state: directory
+      owner: devops
+      group: devops
+      mode: 0755
+
+  - file:
+      name: /root/logs
+      state: directory
+
+  - cron:
+      name: "shutdown instance"
+      minute: "0"
+      hour: "20"
+      job: "/sbin/shutdown now >> /root/logs/shutdown.log"
+

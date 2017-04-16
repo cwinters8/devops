@@ -1,0 +1,30 @@
+--- # deploy code from the CISAUTOMATION repositories
+
+- hosts: ldap
+  become: yes
+
+  vars:
+    env: othrd
+    homedir: /Users/clark.wintersibm.com
+    fwdir: "{{ homedir }}/CISAUTOMATION/ansible_framework/ansible_framework"
+    envdir: "{{ homedir }}/CISAUTOMATION/ansible_deployment/InventoryDefinition/inventory/environments/{{ env }}"
+    bindir: /lh_files/cis_assets
+    ansdir: "/etc/ansible/{{ env }}"
+    user: devops
+    s3bucket: https://s3.amazonaws.com/clark-binaries
+  
+  tasks:
+  - name: archive roles
+    local_action: command tar -czvf "{{ fwdir }}/roles.tar.gz {{ fwdir }}/roles"
+
+  - name: archive playbooks
+    local_action: command tar -czvf "{{ fwdir }}/playbooks.tar.gz {{ fwdir }}/playbooks"
+
+  - name: "archive {{ env }} inventory"
+    local_action: command tar -czvf "{{ fwdir }}/inventory.tar.gz {{ envdir }}"
+
+  - include: ../tasks/get_cisautomation.yml
+    with_items:
+      - roles
+      - playbooks
+      - inventory

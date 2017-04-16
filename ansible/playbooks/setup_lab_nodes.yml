@@ -1,0 +1,34 @@
+--- # configuring lab server users and directory structure
+
+- hosts: lab
+  become: yes
+  tasks:
+  - user:
+      name: test
+      password: test123
+      shell: /bin/bash
+      #generate_ssh_key: yes
+
+  - file:
+      name: /home/test/playbooks
+      state: directory
+      owner: test
+      group: test
+      mode: 0755
+
+  - yum:
+      name: epel-release
+      state: latest
+
+  - yum:
+      name: '*'
+      state: latest
+
+  - yum:
+      name: ansible
+      state: latest
+
+  # - yum:
+  #     name: 
+  #     state: latest
+  

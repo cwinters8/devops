@@ -1,0 +1,10 @@
+--- # task to test looping
+
+- name: check for existence of file 
+  stat: 
+    path: "/lh_files/cis_assets/{{ item }}.tar.gz"
+  register: tarfile
+
+- debug:
+    msg: "{{ tarfile }}"
+    

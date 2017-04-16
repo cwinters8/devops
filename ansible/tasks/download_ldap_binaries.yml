@@ -1,0 +1,27 @@
+--- # task to download binaries
+
+- name: "Check to see if {{ item }} binaries exist"
+  stat:
+    path: "{{ bindir }}/{{ item }}.tar.gz"
+  register: tarfile
+
+- name: "Download Binaries for {{ item }} "
+  get_url:
+    url: "{{ s3bucket }}/{{ item }}.tar.gz"
+    dest: "{{ bindir }}"
+  when: tarfile.stat.exists == False
+
+# - name: "Create directory"
+#   file:
+#     path: "{{ bindir }}/{{ item }}"
+#     state: directory
+#     owner: "{{ user }}"
+#     group: "{{ user }}"
+
+- name: "Unarchive binaries for {{ item }}"
+  unarchive:
+    copy: no
+    src: "{{ bindir }}/{{ item }}.tar.gz"
+    dest: "{{ bindir }}/"
+    owner: "{{ user }}"
+    group: "{{ user }}"
