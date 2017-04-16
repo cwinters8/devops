@@ -4,18 +4,3 @@
     dest: "{{ ansdir }}/"
     owner: "{{ user }}"
     group: "{{ user }}"
-
-# - name: Get Playbooks
-#   copy:
-#     src: "{{ fwdir }}/playbooks"
-#     dest: "{{ ansdir }}"
-#     owner: "{{ user }}"
-#     group: "{{ user }}"
-
-# - name: "Get Inventory for {{ env }}"
-#   copy:
-#     src: "{{ envdir }}/"
-#     dest: "{{ ansdir }}/inventory"
-#     owner: "{{ user }}"
-#     group: "{{ user }}"
-    
