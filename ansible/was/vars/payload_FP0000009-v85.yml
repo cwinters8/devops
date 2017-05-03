@@ -6,4 +6,4 @@ fixpack:
     fixpack/8.5.5-WS-WAS-FP0000009-part2.zip:
       check: "native/com.ibm.was.shortcuts.linux_8.0.0.201602250402.zip"
 fixpack_offering: com.ibm.websphere.BASE.v85_8.5.5009.20160225_0435
-fixpack_version: 8.5.5011
+fixpack_version: 8.5.5009
