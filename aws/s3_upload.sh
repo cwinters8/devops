@@ -5,7 +5,7 @@ bucket=clark-binaries
 contentType="application/x-compressed-tar"
 dateValue=`date -R`
 
-for fn in gskit sds db2
+for fn in gskit sds db2 db2-hadr java
 do
 	filename=${fn}.tar.gz
 	filepath=${dir}/${filename}

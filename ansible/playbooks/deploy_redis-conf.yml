@@ -1,0 +1,17 @@
+--- 
+
+- hosts: amaz amaz-redis
+  become: yes
+
+  vars:
+    redis_port: 6379
+  
+  tasks:
+  - include_vars: ../vars/redis_main.yml 
+  
+  - name: create /etc/redis directory 
+    file:
+      path: /etc/redis
+      state: directory
+
+  - include: ../tasks/update_redis-conf.yaml

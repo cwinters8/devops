@@ -1,0 +1,29 @@
+--- 
+
+- hosts: amaz
+  become: yes
+  
+  tasks:
+  - include_vars: ../vars/8.5.5.yml
+  - include_vars: ../vars/payload_FP0000009-v85.yml
+
+  - name: remove existing version check file(s)
+    shell: 'rm -f /tmp/WAS*'
+
+  - name: create directory
+    file:
+      path: "{{ was_install_dir }}/bin"
+      state: directory
+  
+  - name: upload versionInfo.sh
+    copy:
+      src: ../files/versionInfo.sh
+      dest: "{{ was_install_dir }}/bin"
+      mode: 0755
+
+  - name: upload versionInfo.txt
+    copy:
+      src: ../files/versionInfo.txt
+      dest: "{{ was_install_dir }}"
+
+  - include: ../tasks/check_fixpack.yml

@@ -1,4 +1,4 @@
---- # testing loops in Ansible
+--- 
 
 - hosts: ldap
   become: yes
@@ -8,6 +8,7 @@
     homedir: /Users/clark.wintersibm.com
     fwdir: "{{ homedir }}/CISAUTOMATION/ansible_framework/ansible_framework"
     envdir: "{{ homedir }}/CISAUTOMATION/ansible_deployment/InventoryDefinition/inventory/environments/{{ env }}"
+    artifactdir: "{{ homedir }}/CISAUTOMATION/artifacts/Components"
     bindir: /lh_files/cis_assets
     ansdir: "/etc/ansible/{{ env }}"
     user: devops
@@ -19,4 +20,14 @@
       - sds
       - gskit
       - db2
+      - db2-hadr
+      - java
+    tags: binaries 
 
+  - include: ../tasks/get_artifacts.yml
+    with_items:
+      # - gskit
+      # - db2-base
+      # - sds-ldap
+      - sds-ldap-commands
+    tags: artifacts 

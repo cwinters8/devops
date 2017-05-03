@@ -1,0 +1,19 @@
+- name: replace configuration using template /etc/redis/6379.conf
+  template:
+    src: ../templates/redis.conf.template
+    dest: "{{ redis_config_file }}"
+    mode: 0755 
+
+# - name: update maxmemory setting in redis_config_file
+#   lineinfile:
+#     dest: "{{ redis_config_file }}"
+#     line: 'maxmemory {{ redis_maxmemory }}'
+#     state: present
+#     insertafter: '^# maxmemory <bytes>'
+
+# - name: update maxmemory-policy setting in redis_config_file
+#   lineinfile:
+#     dest: "{{ redis_config_file }}"
+#     line: 'maxmemory-policy allkeys-lru'
+#     state: present
+#     insertafter: '^# maxmemory-policy noeviction'

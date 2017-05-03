@@ -1,0 +1,21 @@
+--- # stop EC2 instances depending on tags passed at execution time
+
+- hosts: local
+  vars:
+    ldapinstid: i-0846dada88ffcbe03
+    ansctlinstid: i-0c5773867164538d4
+    region: us-east-1
+  tasks:
+  - name: stop LDAP sandbox EC2 instance
+    ec2:
+      instance_ids: "{{ ldapinstid }}"
+      state: stopped
+      region: "{{ region }}"
+    tags: ldap 
+
+  - name: stop Ansible Control EC2 instance
+    ec2:
+      instance_ids: "{{ ansctlinstid }}"
+      state: stopped
+      region: "{{ region }}"
+    tags: ansctl

@@ -7,7 +7,7 @@
     env: othrd
     homedir: /Users/clark.wintersibm.com
     fwdir: "{{ homedir }}/CISAUTOMATION/ansible_framework/ansible_framework"
-    envdir: "{{ homedir }}/CISAUTOMATION/ansible_deployment/InventoryDefinition/inventory/environments/{{ env }}"
+    invdir: "{{ homedir }}/CISAUTOMATION/ansible_deployment/InventoryDefinition"
     bindir: /lh_files/cis_assets
     ansdir: "/etc/ansible/{{ env }}"
     user: devops
@@ -20,9 +20,9 @@
       - roles
       - playbooks
 
-  - name: "archive {{ env }} inventory"
+  - name: "archive inventory"
     become: no
-    local_action: "shell cd {{ envdir }}; /usr/local/bin/gtar --transform \"s/^./inventory/\" -czvf {{ fwdir }}/inventory.tar.gz ."
+    local_action: "shell cd {{ invdir }}; /usr/bin/tar -czvf {{ fwdir }}/inventory.tar.gz inventory"
 
   - include: ../tasks/get_cisautomation.yml
     with_items:

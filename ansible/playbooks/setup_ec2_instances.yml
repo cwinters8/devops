@@ -1,38 +1,58 @@
 --- # configuring lab server users and directory structure
 
-- hosts: ldap amaz
+- hosts: amaz amaz-redis
   become: yes
   tasks:
-  - user:
+  - name: devops user 
+    user:
       name: devops
       shell: /bin/bash
 
-  - yum:
+  - name: epel-release repository
+    yum:
       name: epel-release
       state: latest
 
-  - yum:
+  - name: update all packages
+    yum:
       name: '*'
       state: latest
 
-  - yum:
+  - name: ansible package
+    yum:
       name: ansible
       state: latest
+      enablerepo: epel
 
-  - file:
+  - name: /lh_files/cis_assets dir 
+    file:
       name: /lh_files/cis_assets
       state: directory
       owner: devops
       group: devops
       mode: 0755
 
-  - file:
+  - name: /root/logs dir 
+    file:
       name: /root/logs
       state: directory
 
-  - cron:
+  - name: update timezone
+    timezone:
+      name: America/Denver
+    register: timechange
+
+  - name: reload crond service if timezone was changed
+    service: 
+      name: crond
+      state: reloaded
+    when: timechange.changed
+
+  - name: cron entry for instance shutdown
+    cron:
       name: "shutdown instance"
       minute: "0"
-      hour: "20"
-      job: "/sbin/shutdown now >> /root/logs/shutdown.log"
+      hour: "18"
+      job: "/sbin/poweroff >> /root/logs/poweroff.log"
+    tags: cronstop
 

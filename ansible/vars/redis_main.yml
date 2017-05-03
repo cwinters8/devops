@@ -1,0 +1,8 @@
+redis_config_file: /etc/redis/{{ redis_port }}.conf
+redis_logfile: /var/log/redis_{{ redis_port }}.log
+redis_dir: /var/lib/{{ redis_port }}
+redis_pidfile: /var/run/redis_{{ redis_port }}.pid
+redis_build_dir: "/opt/{{ redis_version }}"
+redis_init_file: "{{ redis_build_dir }}/utils/redis_init_script"
+redis_maxmemory: "{{ '4gb' if ansible_memtotal_mb > 4096 else '2gb' }}"
+custom_facts_dir: /etc/ansible/facts.d

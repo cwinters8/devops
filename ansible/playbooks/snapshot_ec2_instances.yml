@@ -1,0 +1,15 @@
+--- # start EC2 instances depending on tags passed at execution time
+
+- hosts: local
+  vars:
+    ldapinstid: i-0846dada88ffcbe03
+    ansctlinstid: i-0c5773867164538d4
+    region: us-east-1
+  tasks:
+  - name: snapshot LDAP sandbox EC2 instance
+    ec2_ami:
+      name: SDS-LDAP Sandbox 
+      instance_id: "{{ ldapinstid }}"
+      state: present
+      region: "{{ region }}"
+    tags: ldap 

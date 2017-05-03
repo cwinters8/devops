@@ -1,0 +1,14 @@
+- name: "Get path to artifacts for {{ item }}"
+  become: no
+  local_action: "shell find {{ artifactdir }} -name '{{ item }}' -type d"
+  register: artifactpath
+
+- debug:
+    msg: "{{ artifactpath.stdout }}"
+
+- name: "Get artifacts for {{ item }}"
+  copy:
+    src: "{{ artifactpath.stdout }}"
+    dest: "{{ ansdir }}/roles"
+    owner: "{{ user }}"
+    group: "{{ user }}"
