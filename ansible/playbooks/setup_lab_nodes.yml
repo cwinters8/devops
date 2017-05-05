@@ -1,24 +1,28 @@
 --- # configuring lab server users and directory structure
 
-- hosts: lab
+- hosts: rhel-lab
   become: yes
   tasks:
-  - user:
-      name: test
-      password: test123
-      shell: /bin/bash
-      #generate_ssh_key: yes
+  # - user:
+  #     name: test
+  #     password: test123
+  #     shell: /bin/bash
+  #     #generate_ssh_key: yes
 
-  - file:
-      name: /home/test/playbooks
-      state: directory
-      owner: test
-      group: test
-      mode: 0755
+  # - file:
+  #     name: /home/test/playbooks
+  #     state: directory
+  #     owner: test
+  #     group: test
+  #     mode: 0755
 
-  - yum:
+  - name: install EPEL-RELEASE repo 
+    yum_repository:
       name: epel-release
-      state: latest
+      description: Extra Packages for Enterprise Linux
+      state: present
+      enabled: yes
+      baseurl: https://dl.fedoraproject.org/pub/epel/7/x86_64/
 
   - yum:
       name: '*'
@@ -27,8 +31,4 @@
   - yum:
       name: ansible
       state: latest
-
-  # - yum:
-  #     name: 
-  #     state: latest
   

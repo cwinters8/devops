@@ -2,10 +2,11 @@
 
 - hosts: amaz
   become: yes
-  
-  tasks:
-  - include_vars: ../vars/8.5.5.yml
-  - include_vars: ../vars/payload_FP0000009-v85.yml
+
+  pre_tasks:
+
+  - include_vars: ../roles/websphere-fixpack/vars/8.5.5.yml
+  - include_vars: ../roles/websphere-fixpack/vars/payload_FP0000009-v85.yml
 
   - name: remove existing version check file(s)
     shell: 'rm -f /tmp/WAS*'
@@ -26,4 +27,5 @@
       src: ../files/versionInfo.txt
       dest: "{{ was_install_dir }}"
 
-  - include: ../tasks/check_fixpack.yml
+  roles:
+  - websphere-fixpack

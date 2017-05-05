@@ -1,6 +1,6 @@
 --- # configuring lab server users and directory structure
 
-- hosts: amaz amaz-redis
+- hosts: amaz
   become: yes
   tasks:
   - name: devops user 

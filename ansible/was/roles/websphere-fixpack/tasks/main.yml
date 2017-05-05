@@ -1,4 +1,7 @@
-- name: check currently installed version 
+# - include_vars: ../vars/8.5.5.yml
+# - include_vars: ../vars/payload_FP0000009-v85.yml
+
+- name: check currently installed version
   shell: "{{ was_install_dir }}/bin/versionInfo.sh | grep -A1 'IBM WebSphere Application Server' | tail -n 1 | awk '{print $2}' | sed 's/\\./0/3'"
   register: installed_fixpack
 
@@ -10,12 +13,6 @@
   debug: 
     msg: "{{ fixpack_version }}"
 
-- name: quit if fixpack is already installed
-  fail:
-    msg: "Fixpack already installed"
-  when: "{{ installed_fixpack.stdout >= fixpack_version }}"
-
-- name: touch a file based on fixpack version
-  file:
-    name: "/tmp/WAS_{{ fixpack_version }}"
-    state: touch
+- name: install fixpack if not already present
+  include: install_fixpack.yml
+  when: "{{ installed_fixpack.stdout < fixpack_version }}"

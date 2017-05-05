@@ -1,0 +1,5 @@
+--- # Install Fixpack
+- name: touch a file based on fixpack version
+  file:
+    name: "/tmp/WAS_{{ fixpack_version }}"
+    state: touch
