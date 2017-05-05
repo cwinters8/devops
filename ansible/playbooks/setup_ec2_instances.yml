@@ -8,10 +8,13 @@
       name: devops
       shell: /bin/bash
 
-  - name: epel-release repository
-    yum:
+  - name: install EPEL-RELEASE repo for EL7
+    yum_repository:
       name: epel-release
-      state: latest
+      description: Extra Packages for Enterprise Linux
+      state: present
+      enabled: yes
+      baseurl: https://dl.fedoraproject.org/pub/epel/7/x86_64/
 
   - name: update all packages
     yum:

@@ -16,7 +16,7 @@
   #     group: test
   #     mode: 0755
 
-  - name: install EPEL-RELEASE repo 
+  - name: install EPEL-RELEASE repo for EL7
     yum_repository:
       name: epel-release
       description: Extra Packages for Enterprise Linux
