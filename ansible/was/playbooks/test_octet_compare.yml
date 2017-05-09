@@ -1,0 +1,10 @@
+---
+- hosts: local
+  vars:
+    v1: 5.0.1
+    v2: 5.0.12
+  tasks:
+    - name: teset comparison
+      debug:
+        msg: v2 is greater than v1
+      when: v2 > v1
