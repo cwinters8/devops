@@ -2,6 +2,6 @@
 Installed Product
 --------------------------------------------------------------------------------
 Name                  IBM WebSphere Application Server
-Version               8.5.5.11
+Version               8.5.5.9
 ID                    BASE
 Build Level           cf111649.01

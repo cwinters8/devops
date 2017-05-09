@@ -13,6 +13,10 @@
   debug: 
     msg: "{{ fixpack_version }}"
 
+- debug:
+    msg: "Fixpack version {{ fixpack_version }} is already installed"
+  when: "{{ installed_fixpack.stdout >= fixpack_version }}"
+
 - name: install fixpack if not already present
   include: install_fixpack.yml
   when: "{{ installed_fixpack.stdout < fixpack_version }}"

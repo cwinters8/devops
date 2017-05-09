@@ -24,11 +24,24 @@
       enabled: yes
       baseurl: https://dl.fedoraproject.org/pub/epel/7/x86_64/
 
-  - yum:
+  - name: update all packages
+    yum:
       name: '*'
       state: latest
 
-  - yum:
-      name: ansible
+  - name: install packages
+    yum:
+      name: "{{ item }}"
       state: latest
+    with_items:
+      - ansible
+      - git
+      - python
+      - python-devel
+      - python-pip
+
+  - name: add user
+    user:
+      name: ansible
+      state: present
   
