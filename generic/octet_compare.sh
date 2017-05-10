@@ -2,6 +2,10 @@
 
 # Compare octet strings numerically
 # Primarily for the purpose of checking version strings
+# Output:
+#	0 = strings match
+#	1 = 1st string greater than 2nd string
+#	-1 = 1st string less than 2nd string
 
 # verify input
 if (( $# != 2 ))
@@ -39,11 +43,6 @@ then
 	done
 fi
 
-# temp for testing
-echo "Array 1: ${arr1[@]}"
-echo "Array 2: ${arr2[@]}"
-#exit
-
 # some vars useful for calculating
 length=${#arr2[@]}
 
@@ -54,20 +53,17 @@ do
 	if [ ${arr1[$i]} -gt ${arr2[$i]} ]
 	then
 		retval=1
-		echo "quitting: ${arr1[$i]} > ${arr2[$i]}"
 		echo $retval
 		exit
 	# if arr1[$i] is less than arr2[$i], quit and return -1
 	elif [ ${arr1[$i]} -lt ${arr2[$i]} ]
 	then
 		retval=-1
-		echo "quitting: ${arr1[$i]} < ${arr2[$i]}"
 		echo $retval
 		exit
 	# if arr1[$i] and arr2[$i] are the same, return 0 and continue checking
 	else
 		retval=0
-		echo "passed: ${arr1[$i]} = ${arr2[$i]}"
 	fi
 done
 
