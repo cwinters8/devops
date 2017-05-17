@@ -1,0 +1,29 @@
+---
+
+  - name: Create Temporary TDI JAR Install Directory
+    file:
+      path: "{{tdi_tmp_jar_install_dir}}"
+      state: directory
+
+  - name: Uncompress TDI JARs
+    unarchive:
+      src: "{{tdi_jar_binary}}"
+      dest: "{{tdi_tmp_jar_install_dir}}"
+      copy: no
+      creates: "{{tdi_tmp_jar_install_dir}}/jars"
+
+  - name: Copying custom JARS to TDI install dir
+    shell: "/bin/cp -pRf {{tdi_tmp_jar_install_dir}}/jars/* {{tdi_install_directory}}/jars/."
+
+  - name: Change owner to root
+    file:
+      path: "{{tdi_install_directory}}/jars"
+      state: directory
+      owner: root
+      group: root
+      recurse: yes
+
+  - name: Remove Temporary TDI JAR Install Directory
+    file:
+      path: "{{ tdi_tmp_jar_install_dir }}"
+      state: absent

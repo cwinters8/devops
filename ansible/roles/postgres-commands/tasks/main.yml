@@ -1,0 +1,15 @@
+---
+  - include_vars: ../vars/  #fill this in
+    tags: always
+
+  - include: show_status.yml
+    tags: [showStatus,showAll]
+
+  - include: show_mode.yml
+    tags: [showMode,showAll]
+    
+  - include: show_repmgr.yml
+    tags: [showRepmgr,showAll]
+
+  - include: update_pghba.yml
+    tags: updatePghba  

@@ -1,0 +1,21 @@
+--- # configure pg_hba.conf and restart Postgres services
+
+- name: configure pg_hba.conf 
+  become: yes
+  become_user: "{{ postgresql_admin_user }}"
+  lineinfile:
+    dest: "{{ pg_config_dir }}/pg_hba.conf"
+    regexp: '^host\s+{{ pg_database }}\s+{{ pg_user }}\s+{{ pg_address }}\s+md5$'
+    line: 'host   {{ pg_database }}   {{ pg_user }}   {{ pg_address }}    md5'
+    state: '{{ state }}'
+  register: pghba
+
+- debug:
+    msg: "pg_hba.conf file was updated. Attempting to restart postgresql..."
+  when: pghba.changed
+  
+- name: touch a file to represent postgres service
+  file:
+    name: /tmp/postgresql.stat
+    state: touch
+  when: pghba.changed

@@ -1,0 +1,5 @@
+--- # Execute the task to update pg_hba.conf
+
+- hosts: ldap
+  vars:
+    state: present

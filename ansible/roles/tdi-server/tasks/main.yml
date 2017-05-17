@@ -1,0 +1,12 @@
+--- # Execute JAR update task
+
+  - name: upload tarball
+    copy:
+      src: "../files/{{ tdi_server_jar_update_file_name }}"
+      dest: "{{ tdi_jar_binary }}"
+    tags: always
+
+  - include: jar_update.yml
+    become: yes
+    when: tdi_server_jar_update_file_name is defined
+    tags: [install,jars]

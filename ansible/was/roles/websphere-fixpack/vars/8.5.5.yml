@@ -1,7 +1,0 @@
----
-was_os_user: wasadmin
-was_os_group: wasgroup
-was_install_dir: /opt/IBM/WebSphere85/AppServer
-custom_facts_dir: /etc/ansible/facts.d
-ibmim_install_dir: /opt/IBM/InstallationManager
-was_ownership_root: /opt/IBM

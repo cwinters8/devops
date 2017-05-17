@@ -1,0 +1,27 @@
+--- # Deploy JARs
+
+- hosts: ldap
+  
+  vars:
+    tdi_files_repo: /tmp
+    tdi_server_jar_update_file_name: TDI711_jars_update_20170516.tar.gz
+    tdi_jar_binary: "{{tdi_files_repo}}/tdi/custom/{{tdi_server_jar_update_file_name}}"
+    tdi_tmp_jar_install_dir: /tmp/tdi/install_jars
+    tdi_install_directory: /opt/IBM/TDI
+
+  pre_tasks:
+    - name: create jar binary dir
+      file:
+        path: "{{tdi_files_repo}}/tdi/custom"
+        state: directory
+      tags: always
+
+    - name: create JARs install directory
+      become: yes
+      file:
+        path: "{{ tdi_install_directory }}/jars"
+        state: directory
+      tags: always
+
+  roles:
+    - tdi-server

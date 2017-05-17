@@ -1,0 +1,29 @@
+# - include_vars: ../vars/8.5.5.yml
+# - include_vars: ../vars/payload_FP0000009-v85.yml
+
+- name: check currently installed version
+  shell: "{{ was_install_dir }}/bin/versionInfo.sh | grep -A1 'IBM WebSphere Application Server' | tail -n 1 | awk '{print $2}'"
+  register: installed_fixpack
+
+- name: check installed_fixpack string
+  debug: 
+    msg: "{{ installed_fixpack.stdout }}"
+
+- name: check fixpack_version string
+  debug: 
+    msg: "{{ fixpack_version }}"
+
+- name: execute script to compare versions
+  script: "/Users/clark.wintersibm.com/Clark-Winters/devops/generic/octet_compare.sh {{ installed_fixpack.stdout }} {{ fixpack_version }}"
+  register: version_compare
+
+- debug:
+    msg: "version compare result: {{ version_compare.stdout | int }}"
+
+- debug:
+    msg: "Fixpack version {{ fixpack_version }} is already installed"
+  when: "{{ version_compare.stdout|int  >= 0 }}"
+
+- name: install fixpack if not already present
+  include: install_fixpack.yml
+  when: "{{ version_compare.stdout|int == -1 }}"
