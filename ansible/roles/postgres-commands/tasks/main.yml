@@ -1,15 +1,39 @@
 ---
-  - include_vars: ../vars/  #fill this in
+  - include_vars: ../vars/postgres_vars.yml
     tags: always
 
-  - include: show_status.yml
-    tags: [showStatus,showAll]
+  - name: create postgres user
+    become: yes
+    user:
+      name: "{{ postgresql_admin_user }}"
+      state: present
+    tags: always
 
-  - include: show_mode.yml
-    tags: [showMode,showAll]
+  - name: create config directory
+    become: yes
+    file:
+      name: "{{ pg_config_dir }}"
+      state: directory
+      owner: "{{ postgresql_admin_user }}"
+      group: "{{ postgresql_admin_user }}"
+    tags: always
+
+  - name: upload file
+    become: yes
+    become_user: "{{ postgresql_admin_user }}"
+    copy:
+      src: ../files/pg_hba.conf
+      dest: "{{ pg_config_dir }}"
+    tags: upload
+
+  # - include: show_status.yml
+  #   tags: [showStatus,showAll]
+
+  # - include: show_mode.yml
+  #   tags: [showMode,showAll]
     
-  - include: show_repmgr.yml
-    tags: [showRepmgr,showAll]
+  # - include: show_repmgr.yml
+  #   tags: [showRepmgr,showAll]
 
   - include: update_pghba.yml
     tags: updatePghba  

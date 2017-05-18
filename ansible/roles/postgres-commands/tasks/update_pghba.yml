@@ -1,13 +1,13 @@
 --- # configure pg_hba.conf and restart Postgres services
-
-- name: configure pg_hba.conf 
-  become: yes
+- name: configure pg_hba.conf
   become_user: "{{ postgresql_admin_user }}"
+  become: yes
   lineinfile:
     dest: "{{ pg_config_dir }}/pg_hba.conf"
     regexp: '^host\s+{{ pg_database }}\s+{{ pg_user }}\s+{{ pg_address }}\s+md5$'
     line: 'host   {{ pg_database }}   {{ pg_user }}   {{ pg_address }}    md5'
-    state: '{{ state }}'
+    state: "{{'present' if (pg_entry_state == 'add' or pg_entry_state == 'present') else 'absent' if (pg_entry_state == 'remove' or pg_entry_state == 'absent')}}"
+    backup: yes
   register: pghba
 
 - debug:
