@@ -4,5 +4,5 @@ postgresql_admin_user: postgres
 pg_config_dir: /var/lib/pgsql/data
 pg_database: gateway3
 pg_user: cwinters
-pg_address: 127.0.0.1
-pg_entry_state: add
+pg_address: 127.0.0.1/32
+pg_entry_state: present

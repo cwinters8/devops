@@ -3,14 +3,12 @@
     tags: always
 
   - name: create postgres user
-    become: yes
     user:
       name: "{{ postgresql_admin_user }}"
       state: present
     tags: always
 
   - name: create config directory
-    become: yes
     file:
       name: "{{ pg_config_dir }}"
       state: directory
@@ -19,8 +17,6 @@
     tags: always
 
   - name: upload file
-    become: yes
-    become_user: "{{ postgresql_admin_user }}"
     copy:
       src: ../files/pg_hba.conf
       dest: "{{ pg_config_dir }}"

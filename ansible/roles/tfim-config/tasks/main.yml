@@ -1,0 +1,4 @@
+---
+
+- include: map-modules.yml
+  with_items: "{{ clusters }}"

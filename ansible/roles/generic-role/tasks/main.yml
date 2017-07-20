@@ -1,0 +1,10 @@
+---
+
+- name: verify task is reached with generic tag
+  debug:
+    msg: "Task with generic tag executed successfully"
+  tags: generic
+
+- name: check if non-tagged task is reached
+  debug:
+    msg: "Task without tags executed"

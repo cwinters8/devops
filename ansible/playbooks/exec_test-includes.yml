@@ -1,0 +1,6 @@
+--- # execute test-includes role
+
+- hosts: local
+  roles:
+    - test-includes
+    

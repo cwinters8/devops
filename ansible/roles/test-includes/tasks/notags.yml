@@ -1,0 +1,5 @@
+---
+
+- name: No tags
+  debug:
+    msg: Should only execute when no tags are specified

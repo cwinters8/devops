@@ -1,0 +1,50 @@
+# deployment manager user and password
+was_admin_user: "tfim.admin"
+custom_facts_dir: /etc/ansible/facts.d
+dmgrHost: "{{hostvars['tfim_server_a']['ansible_host']}}"
+dmgrProfileName: Dmgr01
+dmgrCellName: DmgrCell01
+version: 8.0.0
+
+# Logging config params
+rolloverPeriod: 24
+baseHour: 24
+maxNumberOfBackupFiles: 10
+
+#ibmupdater
+was_version: WebSphere80
+was_install_dir: /opt/IBM/WebSphere80/AppServer
+ibm_updater_install_dir: "/opt/IBM/WebSphere80/UpdateInstaller"
+ibm_updater_maintenance_dir: "/opt/IBM/WebSphere80/UpdateInstaller/maintenance"
+
+
+#tfim
+was_os_user: wasadmin
+was_os_group: wasgroup
+osgiCfgInit: "/opt/IBM/WebSphere80/AppServer/profiles/Dmgr01/bin/osgiCfgInit.sh"
+
+node_profiles : [
+  {
+     nodeAgentProfileName: "{{ansible_host_short}}Node01",
+     nodeAgentStartingPort: "10100",
+     nodeAgentCellName: "{{hostvars['tfim_server_a']['ansible_host_short']}}Cell"
+  }
+]
+
+#ihs8.00
+ihs_port: 80
+ihs_ssl_port: 443
+ihs_webserver_name: webserver1
+ihs_node: "{{ansible_host_short}}webserverNode"
+ihs_user: ihsadmin
+ihs_install_dir: /opt/IBM/HTTPServer80
+
+
+ihs_vhosts: |
+ 
+ <VirtualHost *:{{ ihs_ssl_port }}>
+ SSLEnable
+ SSLCipherSpec ALL -SSL_RSA_WITH_3DES_EDE_CBC_SHA
+ </VirtualHost>
+ SSLDisable
+ 

@@ -1,0 +1,10 @@
+---
+
+- name: Always
+  debug:
+    msg: Executes every time
+
+- name: Not-So-Always
+  debug:
+    msg: debugnull tag
+  tags: debugnull

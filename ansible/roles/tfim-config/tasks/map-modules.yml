@@ -1,0 +1,20 @@
+--- # map modules
+
+- name: create temporary directory
+  file:
+    path: "{{ tmp_path }}"
+    state: directory
+    mode: 0755
+
+- name: copy map-modules.j2.py
+  template:
+    src: map-modules.j2.py
+    dest: "{{ tmp_path }}/map-modules.py"
+    mode: 0755
+
+- name: check output
+  shell: "cat {{ tmp_path }}/map-modules.py"
+  register: output
+
+- debug:
+    var: output.stdout

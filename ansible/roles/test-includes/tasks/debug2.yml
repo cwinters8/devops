@@ -1,0 +1,5 @@
+---
+
+- name: Debug2
+  debug:
+    msg: Executes with debug or debug2 tags, OR when no tags are specified

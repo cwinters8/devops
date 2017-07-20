@@ -1,0 +1,5 @@
+clusters:
+  - name: TFIM622_Cluster
+    members:
+      - {name: TFIM_Server1, node: "{{hostvars['tfim_server_a']['ansible_host_short']}}Node01"}
+      - {name: TFIM_Server2, node: "{{hostvars['tfim_server_b']['ansible_host_short']}}Node01"}

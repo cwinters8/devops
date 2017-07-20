@@ -1,0 +1,3 @@
+tfim_server_a ansible_host=ansible-control.co-winters.net ansible_host_short=ansible-control profileName=TFIM_Server1
+tfim_server_b ansible_host=node4-ldap.co-winters.net ansible_host_short=node4-ldap profileName=TFIM_Server2
+tfim_server_c ansible_host=tfim-node.co-winters.net ansible_host_short=tfim-node profileName=TFIM_Server3

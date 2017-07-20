@@ -1,0 +1,13 @@
+---
+
+- include: notags.yml
+
+- name: Debug1
+  debug:
+    msg: Executes with debugnull tag, OR when no tags are specified
+  tags: [debugnull]
+
+- name: Debug1.1
+  debug:
+    msg: Executes with debugnull tag, OR when no tags are specified
+  tags: debugnull

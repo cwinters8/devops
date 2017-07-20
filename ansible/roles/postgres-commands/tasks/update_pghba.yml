@@ -1,7 +1,12 @@
 --- # configure pg_hba.conf and restart Postgres services
+- assert:
+    that:
+      - pg_database|default("") != ""
+      - pg_user|default("") != ""
+      - pg_address|default("") != ""
+      - pg_entry_state|default("") != ""
+      
 - name: configure pg_hba.conf
-  become_user: "{{ postgresql_admin_user }}"
-  become: yes
   lineinfile:
     dest: "{{ pg_config_dir }}/pg_hba.conf"
     regexp: '^host\s+{{ pg_database }}\s+{{ pg_user }}\s+{{ pg_address }}\s+md5$'

@@ -1,0 +1,14 @@
+[tfim-all:children]
+tfim-cluster
+tfim-webspheres
+
+[tfim-cluster]
+tfim_server_a
+
+[tfim-webspheres]
+tfim_server_a
+tfim_server_b
+tfim_server_c
+
+[tfim-webspheres:vars]
+version=8.0.0

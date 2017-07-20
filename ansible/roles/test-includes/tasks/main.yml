@@ -1,0 +1,17 @@
+--- # Testing includes based on tagging
+
+#- include: debug1.yml
+
+- include: include_roles.yml
+
+- include_vars: "{{ payload }}"
+  when: payload is defined
+
+- debug:
+    var: "{{ item }}"
+  with_items:
+    - var1
+    - var2
+  when: payload is defined
+
+# - include: notags.yml

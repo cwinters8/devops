@@ -1,0 +1,8 @@
+---
+- hosts: tfim-cluster
+  gather_facts: no
+  become: yes
+  remote_user: devops
+  serial: 1
+  roles:
+    - tfim-config

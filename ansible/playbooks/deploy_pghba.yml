@@ -1,6 +1,8 @@
 --- # Execute the task to update pg_hba.conf
 
-- hosts: ldap
+- hosts: elk_server
+  remote_user: devops
+  become: yes
 
   roles:
   - postgres-commands
