@@ -19,7 +19,7 @@ restorecon reset /var/lib/pgsql/.ssh/authorized_keys context unconfined_u:object
 
 Going back to the postgres user, I could successfully connect using my public keys!
 
-```
+```console
 [postgres@cwinters3 ~]$ ssh cwinters5
 Last login: Mon Jul 31 17:36:28 2017 from cwinters4.mylabserver.com
 [postgres@cwinters5 ~]$ 
