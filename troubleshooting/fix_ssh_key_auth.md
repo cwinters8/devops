@@ -1,6 +1,6 @@
 ## The Problem
 
-Recently, I beat my head against a wall for hours because 2 out of 3 PostgreSQL nodes refused to connect via public keys, even though all permissions were verified and the keys were generated and propogated using the appropriate method. All the working node and the non-working node appeared identical in configuration. The only user experiencing the issue was the postgres user.
+Recently, I beat my head against a wall for hours because 2 out of 3 PostgreSQL nodes refused to connect via public keys, even though all permissions were verified and the keys were generated and propogated using the appropriate method. The working node and the non-working nodes appeared identical in configuration. The only user experiencing the issue was the postgres user.
 
 ## The Fix
 
