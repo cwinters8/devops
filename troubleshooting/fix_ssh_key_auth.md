@@ -9,7 +9,7 @@ I ran the following command on all three nodes (as root) to fix SELinux file con
 restorecon -Rv ~postgres/.ssh
 ```
 I got back the following output on nodes 2 and 3 (the ones that weren't working), and no output from the working node.
-```bash
+```ShellSession
 restorecon reset /var/lib/pgsql/.ssh context unconfined_u:object_r:postgresql_db_t:s0->unconfined_u:object_r:ssh_home_t:s0
 restorecon reset /var/lib/pgsql/.ssh/id_rsa context unconfined_u:object_r:postgresql_db_t:s0->unconfined_u:object_r:ssh_home_t:s0
 restorecon reset /var/lib/pgsql/.ssh/id_rsa.pub context unconfined_u:object_r:postgresql_db_t:s0->unconfined_u:object_r:ssh_home_t:s0
