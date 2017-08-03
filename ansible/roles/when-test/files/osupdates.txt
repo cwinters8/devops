@@ -1,0 +1,14 @@
+DUE DATE    DUE  SEV  ADVISORY     DESCRIPTION
+----------  ---  ---  -----------  ---------------------------------------------
+07/30/2017  *    M    2017:2474.1  RHSA-2017:1382-01: sudo security update
+08/19/2017       M    2017:2729.1  RHSA-2017:1486-01: kernel security update
+08/19/2017       M    2017:2730.1  RHSA-2017:1480-01: glibc security update
+08/22/2017       M    2017:2836.1  RHSA-2017:1574-01: sudo security update
+10/17/2017       L    2017:1829.1  RHSA-2017:1105-01: bind security update
+11/04/2017       L    2017:2041.1  RHSA-2017:1202-01: bind security update
+11/19/2017       L    2017:2344.1  RHSA-2017:1267-01: rpcbind security update
+11/19/2017       L    2017:2343.1  RHSA-2017:1268-01: libtirpc security update
+11/26/2017       L    2017:2449.1  RHSA-2017:1364-01: nss security and bug fix update
+11/27/2017       L    2017:2478.1  RHSA-2017:1372-01: kernel security and bug fix update
+01/01/2018       L    2017:2997.1  RHSA-2017:1679-01: bind security and bug fix update
+01/08/2018       L    2017:3080.1  RHSA-2017:1723-01: kernel security and bug fix update

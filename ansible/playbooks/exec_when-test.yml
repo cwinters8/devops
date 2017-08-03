@@ -1,0 +1,7 @@
+---
+- hosts: local
+  gather_facts: no
+  vars:
+    getoutput: "/Users/clark.wintersibm.com/Clark-Winters/devops/generic/getoutput.sh"
+  roles:
+    - when-test

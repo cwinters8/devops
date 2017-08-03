@@ -1,0 +1,4 @@
+- name: Get os_updater output
+  shell: cat /tmp/osupdates.txt | grep -E -v 'DUE DATE|----------' || true
+  register: osupdates
+  changed_when: no

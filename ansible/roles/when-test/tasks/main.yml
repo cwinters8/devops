@@ -1,0 +1,14 @@
+---
+
+- include: osupdate.yml
+
+- debug:
+    msg: "No updates available"
+  when: osupdates.stdout == ""
+
+- debug:
+    msg: "Updates available"
+  when: osupdates.stdout != ""
+
+- debug:
+    var: osupdates.stdout_lines
