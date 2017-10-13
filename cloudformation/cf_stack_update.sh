@@ -1,0 +1,1 @@
+aws cloudformation update-stack --stack-name Clark-WebStack --template-body file:///"$PWD"/create_s3_bucket.json --parameters ParameterKey=InstanceTypeParam,ParameterValue=t2.medium --capabilities CAPABILITY_NAMED_IAM --profile sandbox

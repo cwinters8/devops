@@ -1,0 +1,176 @@
+{
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "Create a new web stack",
+	"Parameters": {
+		"BucketNameParam": {
+			"Type": "String",
+			"Description": "The name of the bucket"
+		},
+		"KeyNameParam": {
+			"Type": "AWS::EC2::KeyPair::KeyName",
+			"Description": "Name of the EC2 pem key",
+			"Default": "clark-raxsbox-ohio"
+		},
+		"InstanceTypeParam": {
+			"Type": "String",
+			"Description": "EC2 instance type",
+			"AllowedValues": ["t2.micro","t2.medium","m4.large"],
+			"Default": "t2.medium"
+		}
+	},
+	"Mappings": {
+		"RegionMap": {
+			"us-east-1": {
+				"64": "ami-d651b8ac"
+			},
+			"us-east-2": {
+				"64": "ami-9686a4f3"
+			},
+			"us-west-1": {
+				"64": "ami-2d5c6d4d"
+			},
+			"us-west-2": {
+				"64": "ami-ecc63a94"
+			}
+		}
+	},
+	"Conditions": {
+		"BucketNameSet": {
+			"Fn::Not": [
+				{"Fn::Equals": [{"Ref": "BucketNameParam"}, ""]}
+			]
+		}
+	},
+	"Resources": {
+		"CFTrainingBucket": {
+			"Type": "AWS::S3::Bucket",
+			"Properties": {
+				"BucketName": { "Fn::If": ["BucketNameSet",{"Ref":"BucketNameParam"},{"Ref":"AWS::NoValue"}] }
+			}
+		},
+		"EC2InstRole": {
+			"Type": "AWS::IAM::Role",
+			"Properties": {
+				"AssumeRolePolicyDocument": {
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Principal": {
+								"Service": ["ec2.amazonaws.com"]
+							},
+							"Action": ["sts:AssumeRole"]
+						}
+					]
+				},
+				"Policies": [ {
+					"PolicyName": "s3access",
+					"PolicyDocument": {
+						"Version": "2012-10-17",
+						"Statement": [ {
+							"Effect": "Allow",
+							"Resource": { "Fn::Join": [ "", [{"Fn::GetAtt": [ "CFTrainingBucket", "Arn" ]},"/*"]]},
+							"Action": ["*"]
+						} ]
+					}
+				} ]
+			}
+		},
+		"EC2InstProfile": {
+			"Type": "AWS::IAM::InstanceProfile",
+			"Properties": {
+				"Roles": [ {"Ref": "EC2InstRole"} ],
+				"InstanceProfileName": "ub-inst-profile"
+			}
+		},
+		"EC2SecurityGroup": {
+			"Type": "AWS::EC2::SecurityGroup",
+			"Properties": {
+				"GroupName": "Ubuntu-Web",
+				"GroupDescription": "Allow ingress to web instance(s)",
+				"VpcId": "vpc-803ed2e9",
+				"SecurityGroupIngress": [
+					{
+						"IpProtocol": "tcp",
+						"FromPort": "80",
+						"ToPort": "80",
+						"CidrIp": "0.0.0.0/0"
+					},
+					{
+						"IpProtocol": "tcp",
+						"FromPort": "22",
+						"ToPort": "22",
+						"CidrIp": "0.0.0.0/0"
+					}
+				]
+			}
+		},
+		"LinuxEC2": {
+			"Type": "AWS::EC2::Instance",
+			"Metadata": {
+				"AWS::CloudFormation::Init": {
+					"config": {
+						"packages": {
+							"apt": {
+								"apache2"	: 	[],
+								"tree"		:	[]
+							}
+						},
+						"services": {
+							"sysvinit": {
+								"apache2": {
+									"enabled": "true",
+									"ensureRunning": "true"
+								}
+							}
+						},
+						"files": {
+							"/var/www/html/index.html": {
+								"content": { "Fn::Join": ["\n", [
+									"<html>",
+									"  <head>",
+									"    <title>CF Really Works!</title>",
+									"  </head>",
+									"  <body>",
+									"    <h1>Success! You have bootstrapped your first EC2 instance.</h1>",
+									"  </body>",
+									"</html>"
+								]]}
+							}
+						}
+					}
+				}
+			},
+			"Properties": {
+				"InstanceType": {"Ref": "InstanceTypeParam"},
+				"ImageId": {"Fn::FindInMap": [ "RegionMap", { "Ref": "AWS::Region" }, "64" ]},
+				"KeyName": {"Ref": "KeyNameParam"},
+				"IamInstanceProfile": {"Ref": "EC2InstProfile"},
+				"SecurityGroupIds": [{"Ref": "EC2SecurityGroup"}],
+				"UserData": { "Fn::Base64": { "Fn::Join": ["", [
+					"#!/bin/bash -xe\n",
+					"apt-get update\n",
+					"apt-get -y install python-setuptools python-pip\n",
+					"mkdir -p aws-cfn-bootstrap-latest\n",
+					"curl https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz | tar xz -C aws-cfn-bootstrap-latest --strip-components 1\n",
+					"easy_install aws-cfn-bootstrap-latest\n",
+					
+					"# Install the files and packages from the metadata\n",
+					"/usr/local/bin/cfn-init -v ",
+					"    --stack ", {"Ref": "AWS::StackName"},
+					"    --resource LinuxEC2 ",
+					"    --region ", {"Ref": "AWS::Region" }, "\n"
+				]]}}
+			}
+		}
+	},
+	"Outputs": {
+		"TrainingBucketARN": {
+			"Description": "ARN output for the new bucket",
+			"Value": { "Fn::GetAtt": [ "CFTrainingBucket", "Arn" ] }
+		},
+		"CurrentAMI": {
+			"Description": "Image ID currently in use",
+			"Value": {"Fn::FindInMap": [ "RegionMap", { "Ref": "AWS::Region" }, "64" ]}
+		}
+	}
+}
